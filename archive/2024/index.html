@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anjali's Portfolio</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background-color: black;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            color: white;
+            text-align: center;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        h1, p {
+            display: inline;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 4px solid white;
+            animation: typing 2s steps(30, end), blink-caret 0.75s step-end infinite;
+        }
+
+        p {
+            display: inline;
+            animation: none;
+            border-right: none;
+        }
+	.intro-box {
+            display: inline-block;
+            border: 2px solid #000;
+            padding: 20px;
+            text-align: left;
+            margin: 20px auto;
+            text-align: left;
+            width: 70%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            color: white;
+        }
+        .intro-box h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        .intro-box p {
+            font-size: 1.2em;
+            line-height: 1.5em;
+        }
+        .intro-box a {
+            color: #0073e6;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .intro-box a:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: white; }
+        }
+
+        .hide {
+            visibility: hidden;
+        }
+
+        nav {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            text-align: center;
+            z-index: 2;
+        }
+
+        nav a {
+            color: white;
+            padding: 15px 20px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        section {
+            padding: 100px 20px;
+            height: 100vh;
+            color: white;
+            background-color: black;
+        }
+
+        #home, #about, #projects, #contact {
+            display: block;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background-color: white;
+            color: black;
+            width: 250px;
+            height: 150px;
+            margin: 20px;
+            perspective: 1000px;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .card:hover .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card-front {
+            background-color: #333;
+            color: white;
+        }
+
+        .card-back {
+            background-color: #f8f8f8;
+            color: black;
+            transform: rotateY(180deg);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            margin: auto;
+        }
+
+        input, textarea {
+            margin: 10px 0;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+          .about-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: left;
+            flex-wrap: wrap;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-photo {
+            flex: 1;
+            text-align: right;
+            min-width: 300px;
+        }
+
+        .about-photo img {
+            max-width: 100%;
+            border-radius: 50%;
+        }
+
+        .social-links {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .social-links a {
+            margin: 0 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+        }
+
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    <div id="home" class="container">
+        <canvas id="patternCanvas"></canvas>
+        <div class="content">
+            <h1 id="title"></h1>
+            <p id="subtitle" class="hide">This is Anjali Gupta's portfolio</p>
+        </div>
+    </div>
+
+    <section id="about">
+        <h2>About</h2>
+        <div class="about-content">
+            <div class="intro-box">
+		
+        <p>Hello, I’m <strong>Anjali Gupta</strong>, a passionate and motivated software developer based in <strong>Madison, WI.<br></strong> With a strong foundation in computer science and a diverse skill set in <strong>C++, Python, Java, and<br> JavaScript</strong>, I thrive on building innovative solutions and tackling complex problems.</p>
+        <p>Throughout<br> my academic journey at the <strong>University of Wisconsin-Whitewater</strong> and my professional <br>experiences, I’ve developed a knack for creating efficient, scalable, and user-friendly applications.<br> </p>
+        <p>In addition to my technical expertise, I bring strong analytical and problem-solving skills, honed <br>through personalized tutoring sessions and collaborative projects. My experience working in team <br>environments has equipped me with effective communication and teamwork abilities, essential <br>for any dynamic tech company.
+        I am currently seeking a <strong>Software Engineering Intern </strong>role,<br> where I can leverage my skills and contribute to groundbreaking projects. Explore my portfolio to <br>see the projects I've worked on and learn more about my journey as a software developer.</p>
+        <p>Feel free to connect with me on <a href="https://www.linkedin.com/in/anjali77" target="_blank">LinkedIn</a> or check out my <a href="https://github.com/Anjali0777" target="_blank">GitHub</a> for more detailed insights into my work.</p>
+    </div>
+            <div class="about-photo">
+                <img src="IMG_1326 (1).jpg" alt="Anjali Gupta">
+            </div>
+        </div>
+        
+    </section>
+    <section id="projects">
+        <h2>Projects</h2>
+        <div class="card-container">
+            <div class="card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h3>Minesweeper Game</h3>
+                    </div>
+                    <div class="card-back">
+                        <p>This game is made using C++ with <br>features like flagging.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h3>AI Chatbot</h3>
+			
+                    </div>
+                    <div class="card-back">
+                        <p>Made using Python,<br> Flask (In progress for <br>deployment)</p>
+			
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h3>Portfolio Website</h3>
+                    </div>
+                    <div class="card-back">
+                        <p>Made using Html, CSS<br>and JavaScript.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="contact">
+        <h2>Reach Me Here</h2>
+        <form>
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit">Send</button>
+        </form>
+        <p><a href="Gupta resume.pdf" view>View My Resume</a></p>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/anjali77" target="_blank">LinkedIn</a>
+            <a href="mailto:anjalimg77@gmail.com" target="_blank">Email</a>
+            <a href="https://github.com/anjaligupta" target="_blank">GitHub</a>
+        </div>
+    </section>
+    <script src="js/script.js"></script>
+</body>
+</html>
